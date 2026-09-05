@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Page Introuvable | Morgann Dev CP</title>
+    <!-- Police Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <style>
+        :root {
+            --sage-primary: #003108;
+            --sage-light: #003108;
+            --gold-accent: #000000;
+            --text-light: #e2e8f0;
+        }
+
+        .truc {
+            height: 90vh
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Canvas interactif de fond */
+        #particleCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Overlay épuré : uniquement le bouton et le message */
+        .overlay-content {
+            position: absolute;
+            bottom: 12%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+            pointer-events: none;
+            /* Laisse passer le survol par défaut */
+        }
+
+        .overlay-content * {
+            pointer-events: auto;
+            /* Active le clic uniquement sur le bouton/texte */
+        }
+
+        .status-msg {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--sage-light);
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 12px rgba(180, 201, 188, 0.4);
+        }
+
+        /* Bouton lumineux réfléchissant */
+        .btn-home {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 36px;
+            background: #003108;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            border-radius: 50px;
+            border: 1px solid rgba(180, 201, 188, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 0 20px rgba(136, 167, 149, 0.25), inset 0 0 10px rgba(255, 255, 255, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px) scale(1.03);
+            border-color: var(--gold-accent);
+            box-shadow: 0 0 30px rgba(12, 93, 0, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.474);
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="truc"></div>
+
+    <!-- Canvas principal -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Overlay minimaliste -->
+    <div class="overlay-content">
+        <p class="status-msg">Page introuvable — Survolez l'écran pour disperser les particules</p>
+        <a href="/" class="btn-home">Retour à l'accueil</a>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        let mouse = { x: null, y: null, radius: 140 };
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+        });
+
+        window.addEventListener('mouseleave', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        window.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 0) {
+                mouse.x = e.touches[0].clientX;
+                mouse.y = e.touches[0].clientY;
+            }
+        });
+
+        class Particle {
+            constructor(x, y) {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.baseX = x;
+                this.baseY = y;
+                // Particules légèrement plus grosses pour capter le reflet lumineux
+                this.size = Math.random() * 2.5 + 1.5;
+                this.density = (Math.random() * 25) + 12;
+
+                // Palette de couleurs métalliques & réfléchissantes
+                const colors = [
+                    '#94cfab', // Vert Sauge brillant
+                    '#d8d19d',  // Doré Champagne
+                    'rgba(255, 255, 255, 1)',    // Blanc pur (Point chaud)
+                    '#a3bcb7'  // Argenté métallisé
+                ];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+
+                // Variation de brillance pour l'effet scintillant
+                this.glowSize = Math.random() * 8 + 4;
+            }
+
+            draw() {
+                ctx.save();
+
+                // 1. Définition de l'ombre sous la particule
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.9)'; // Ombre noire sombre
+                ctx.shadowBlur = 12;                     // Flou de l'ombre
+                ctx.shadowOffsetX = 0;                  // Décalage vers la droite
+                ctx.shadowOffsetY = 0;                  // Décalage vers le bas
+
+                // 2. Dessin de la particule avec sa couleur d'origine
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.restore();
+            }
+
+            update() {
+                if (mouse.x !== null && mouse.y !== null) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < mouse.radius) {
+                        let forceDirectionX = dx / distance;
+                        let forceDirectionY = dy / distance;
+                        let maxDistance = mouse.radius;
+                        let force = (maxDistance - distance) / maxDistance;
+                        let directionX = forceDirectionX * force * this.density;
+                        let directionY = forceDirectionY * force * this.density;
+
+                        this.x -= directionX;
+                        this.y -= directionY;
+                    } else {
+                        this.returnToBase();
+                    }
+                } else {
+                    this.returnToBase();
+                }
+            }
+
+            returnToBase() {
+                if (this.x !== this.baseX) {
+                    let dx = this.x - this.baseX;
+                    this.x -= dx / 12;
+                }
+                if (this.y !== this.baseY) {
+                    let dy = this.y - this.baseY;
+                    this.y -= dy / 12;
+                }
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+
+            // Taille du texte 404
+            let fontSize = Math.min(canvas.width * 0.28, 280);
+            ctx.font = `800 ${fontSize}px 'Poppins', sans-serif`;
+            ctx.fillStyle = 'white';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            // Positionnement légèrement au-dessus du centre pour laisser la place au bouton
+            const textY = canvas.height * 0.42;
+            ctx.fillText('404', canvas.width / 2, textY);
+
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Espacement des points (step élevé = beaucoup moins de points)
+            const step = Math.max(7, Math.floor(canvas.width / 180));
+
+            for (let y = 0; y < canvas.height; y += step) {
+                for (let x = 0; x < canvas.width; x += step) {
+                    const index = (y * canvas.width + x) * 4;
+                    const alpha = imageData.data[index + 3];
+
+                    if (alpha > 128) {
+                        particles.push(new Particle(x, y));
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].draw();
+                particles[i].update();
+            }
+            requestAnimationFrame(animate);
+        }
+
+        // Initialisation
+        resizeCanvas();
+        animate();
+    </script>
+    <script src="assets/navbars/accueil/navbar.js"></script>
+    <script src="assets/footer/footer.js"></script>
+</body>
+
+</html>
