@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nos Réalisations — Morgann Dev CP</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* Styles spécifiques pour les cartes projets */
+        .project-card {
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            overflow: hidden;
+            padding: 0;
+            /* Override du padding par défaut des cartes pour l'image */
+        }
+
+        .project-banner {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 1px solid rgba(136, 167, 149, 0.3);
+        }
+
+        .project-body {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .project-body h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .project-body p {
+            font-size: 0.95rem;
+            color: #334155;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .project-tag {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #003108;
+            background: rgba(136, 167, 149, 0.25);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            align-self: flex-start;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="hero">
+        <div class="container">
+            <h1>Sites réalisés par <br>Morgann Dev CP</h1>
+            <p>Découvrez une sélection de nos créations web sur-mesure. Cliquez sur une carte pour visiter directement
+                le site en ligne.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="grid">
+
+            <a href="https://mm-cp.uk" target="_blank" rel="noopener noreferrer" class="card project-card">
+                <img src="/assets/img/banieresexemples/mmcp.png" alt="Bannière Site Exemple 1" class="project-banner">
+                <div class="project-body">
+                    <h3>Morgann Music CP</h3>
+                    <p>Site sur-mesure de 43 pages qui comprend :<br>Une vitrine de 11 pages, Un système
+                        d'Authentification de 5 pages, Un catalogue de 7 pages, 2 portail utilisateur de 17 pages,
+                        portail admin de 8 page, et info legals de 3 pages.
+                    </p>
+                    <span class="project-tag">Site réalisé par Morgann Dev CP</span>
+                </div>
+            </a>
+
+            <a href="https://morgannmusic.uk" target="_blank" rel="noopener noreferrer" class="card project-card">
+                <img src="/assets/img/banieresexemples/mmp.png" alt="Bannière Site Exemple 2" class="project-banner">
+                <div class="project-body">
+                    <h3>Morgann Music Platforms</h3>
+                    <p>Site vitrine de 5 page vivantes.
+                    </p>
+                    <span class="project-tag">Site réalisé par Morgann Dev CP</span>
+                </div>
+            </a>
+
+            <a href="https://rhône-valleys-racers.uk" target="_blank" rel="noopener noreferrer"
+                class="card project-card">
+                <img src="/assets/img/banieresexemples/rvr.png" alt="Bannière Site Exemple 3" class="project-banner">
+                <div class="project-body">
+                    <h3>Rhône Valley Racers</h3>
+                    <p>Site vitrine de 4 pages.</p>
+                    <span class="project-tag">Site réalisé par Morgann Dev CP</span>
+                </div>
+            </a>
+            <a href="https://games.morgannmusic.uk" target="_blank" rel="noopener noreferrer" class="card project-card">
+                <img src="/assets/img/banieresexemples/mmg.png" alt="Bannière Site Exemple 3" class="project-banner">
+                <div class="project-body">
+                    <h3>Morgann Music Games</h3>
+                    <p>Catalogue de 2 page.</p>
+                    <span class="project-tag">Site réalisé par Morgann Dev CP</span>
+                </div>
+            </a>
+            <a href="https://litual.ai.mm-cp.uk" target="_blank" rel="noopener noreferrer" class="card project-card">
+                <img src="/assets/img/banieresexemples/la.png" alt="Bannière Site Exemple 3" class="project-banner">
+                <div class="project-body">
+                    <h3>Litual AI</h3>
+                    <p>Site vitrine et chat IA de 3 page (Nous ne créons pas d'API IA).</p>
+                    <span class="project-tag">Site réalisé par Morgann Dev CP</span>
+                </div>
+            </a>
+
+        </div>
+    </main>
+
+    <script src="assets/navbars/accueil/navbar.js"></script>
+    <script src="assets/footer/footer.js"></script>
+</body>
+
+</html>

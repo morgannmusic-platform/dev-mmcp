@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un compte — Morgann Music Platforms</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/client/account.css">
+
+    <!-- VÉRIFICATION IMMÉDIATE DE L'AUTORISATION -->
+    <script>
+        (function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const autorisation = urlParams.get('autorisation');
+            if (autorisation !== 'oui') {
+                // Si la clef n'est pas "oui", redirection directe avant tout affichage
+                window.location.href = 'login.html';
+            }
+        })();
+    </script>
+</head>
+
+<body>
+
+    <!-- Le contenu est visible par défaut car la redirection JS ci-dessus s'exécute instantanément -->
+    <main class="auth-container">
+        <div class="auth-header">
+            <h1>Morgann Music Platforms</h1>
+            <p>Créer votre compte personnel</p>
+        </div>
+
+        <div id="auth-error" class="auth-error"></div>
+
+        <form id="signin-form" class="auth-form">
+            <div class="form-group">
+                <label for="email">Adresse email</label>
+                <input type="email" id="email" required placeholder="nom@exemple.com">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" required placeholder="•••••••• (6 caractères min.)">
+            </div>
+
+            <button type="submit" class="auth-btn">Créer mon compte</button>
+        </form>
+
+        <div class="auth-footer">
+            <p>Déjà un compte ? <a href="login.html">Se connecter</a></p>
+        </div>
+    </main>
+
+    <!-- Script Firebase -->
+    <script type="module" src="../assets/js/client/signin.js"></script>
+</body>
+
+</html>

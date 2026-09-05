@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Client — Morgann Music Platforms</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="espace.css">
+</head>
+
+<body>
+
+    <!-- Navbar Supérieure -->
+    <header class="mdcp-app-navbar">
+        <div class="nav-brand">
+            <img src="../../assets/img/logos/logo.png" alt="Logo MDCP" class="nav-logo"
+                onerror="this.style.display='none'">
+            <span class="nav-title">Morgann Music Platforms</span>
+        </div>
+        <div class="nav-user">
+            <span id="user-greeting">Bonjour...</span>
+        </div>
+    </header>
+
+    <div class="mdcp-app-layout">
+        <!-- Sidebar Latérale -->
+        <aside class="mdcp-sidebar">
+            <nav class="sidebar-menu">
+                <a href="/client/espace/projets" data-link class="sidebar-item">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                    </svg>
+                    Mes projets
+                </a>
+                <a href="/client/espace/acces" data-link class="sidebar-item">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 0121 9z" />
+                    </svg>
+                    Mes accès
+                </a>
+                <a href="/client/espace/compte" data-link class="sidebar-item">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                    Mon compte
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logout-btn" class="btn-logout">Se déconnecter</button>
+            </div>
+        </aside>
+
+        <!-- Zone d'affichage dynamique de la SPA -->
+        <main id="app-view" class="mdcp-content">
+            <div class="loading-spinner">Chargement en cours...</div>
+        </main>
+    </div>
+
+    <script type="module" src="espace.js"></script>
+</body>
+
+</html>

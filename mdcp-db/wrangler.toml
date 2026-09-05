@@ -1,0 +1,12 @@
+name = "account-worker"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+routes = [
+  { pattern = "api.d1.dev.mm-cp.uk", custom_domain = true }
+]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "mdcp-db"
+database_id = "d760aa39-c88b-4f11-b2ea-566528e653e8"

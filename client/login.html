@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion — Morgann Music Platforms</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/client/account.css">
+</head>
+
+<body>
+
+    <main class="auth-container">
+        <div class="auth-header">
+            <h1>Morgann Music Platforms</h1>
+            <p>Connectez-vous à votre espace client</p>
+        </div>
+
+        <div id="auth-error" class="auth-error"></div>
+
+        <form id="login-form" class="auth-form">
+            <div class="form-group">
+                <label for="email">Adresse email</label>
+                <input type="email" id="email" required placeholder="nom@exemple.com">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" required placeholder="••••••••">
+            </div>
+
+            <button type="submit" class="auth-btn">Se connecter</button>
+        </form>
+
+        <div class="auth-footer">
+            <p>Pas encore de compte ? <a href="signin.html">Créer un compte</a></p>
+        </div>
+    </main>
+
+    <script type="module" src="../assets/js/client/login.js"></script>
+</body>
+
+</html>
