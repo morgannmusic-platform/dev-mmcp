@@ -123,27 +123,35 @@ async function renderProjects() {
 
 // 3. Créer un projet
 async function renderCreateProject() {
+    appView.innerHTML = "<h2>Chargement des utilisateurs...</h2>";
+
+    // 1. Appel explicite de l'action Worker
     const usersData = await apiCall("GET_ALL_USERS");
-    const users = usersData.users || [];
+    console.log("Vrais utilisateurs D1 :", usersData); // Doit afficher { success: true, users: [...] }
+
+    const users = (usersData && usersData.users) ? usersData.users : [];
 
     appView.innerHTML = `
         <h2>Créer un nouveau projet</h2>
         <div class="card">
             <form id="create-project-form">
-                <label>Client</label>
-                <select id="p-user" required>
-                    <option value="">Sélectionner un utilisateur</option>
-                    ${users.map(u => `<option value="${u.uid}">${u.displayName || u.email} (${u.uid})</option>`).join('')}
+                <label for="p-user">Client (${users.length} trouvés dans D1)</label>
+                <select id="p-user" name="user_uid" required>
+                    <option value="">-- Sélectionner un utilisateur --</option>
+                    ${users.map(u => {
+        const displayName = u.displayName || u.email || u.uid;
+        return `<option value="${u.uid}">${displayName} (${u.email || u.uid})</option>`;
+    }).join('')}
                 </select>
 
-                <label>Titre du projet</label>
-                <input type="text" id="p-title" required>
+                <label for="p-title">Titre du projet</label>
+                <input type="text" id="p-title" name="title" required placeholder="Ex: Site Vitrine Web3">
 
-                <label>Description</label>
-                <textarea id="p-desc" rows="4"></textarea>
+                <label for="p-desc">Description</label>
+                <textarea id="p-desc" name="description" rows="4"></textarea>
 
-                <label>Budget (€)</label>
-                <input type="number" id="p-budget" value="0">
+                <label for="p-budget">Budget (€)</label>
+                <input type="number" id="p-budget" name="budget" value="0">
 
                 <button type="submit">Créer le projet</button>
             </form>
@@ -162,10 +170,11 @@ async function renderCreateProject() {
         const res = await apiCall("CREATE_PROJECT", payload);
         if (res.success) {
             window.location.hash = `#/projet/${res.id}`;
+        } else {
+            alert("Erreur lors de la création : " + (res.error || "Inconnue"));
         }
     });
 }
-
 // 4. Gérer un projet spécifique
 async function renderManageProject(id) {
     appView.innerHTML = "<h2>Chargement du projet...</h2>";
